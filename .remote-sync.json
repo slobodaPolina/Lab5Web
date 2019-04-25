@@ -1,0 +1,19 @@
+{
+  "logger": {
+    "title": "Remote Sync"
+  },
+  "transport": "scp",
+  "uploadOnSave": true,
+  "useAtomicWrites": false,
+  "deleteLocal": true,
+  "hostname": "oshnix.com",
+  "port": "2222",
+  "target": "/home/oshnix/markdownEditor",
+  "ignore": [
+    ".remote-sync.json",
+    ".git/**"
+  ],
+  "username": "oshnix",
+  "keyfile": "/home/polina/.ssh/id_rsa",
+  "watch": []
+}
