@@ -1,12 +1,12 @@
 <template>
     <div class="main">
-        <router-view></router-view>
+        <router-link to="/">To all documents</router-link>
     </div>
 </template>
 
 <script>
 export default {
-    name: "App",
+    name: "Edit",
     data() {
         return {
         }
@@ -16,8 +16,5 @@ export default {
 
 
 <style lang="scss">
-    .main {
-        display: flex;
-        color: pink;
-    }
+
 </style>
