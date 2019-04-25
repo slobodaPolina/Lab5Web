@@ -11,7 +11,8 @@
   "target": "/home/oshnix/markdownEditor",
   "ignore": [
     ".remote-sync.json",
-    ".git/**"
+    ".git/**",
+    "node_modules/**"
   ],
   "username": "oshnix",
   "keyfile": "/home/polina/.ssh/id_rsa",

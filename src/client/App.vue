@@ -1,7 +1,7 @@
 <template>
     <div class="main">
         <header>
-            <router-link to="/">To the main page</router-link>
+            <router-link to="/">На главную страницу</router-link>
         </header>
         <router-view></router-view>
     </div>

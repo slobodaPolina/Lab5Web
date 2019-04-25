@@ -1,28 +1,33 @@
 <template>
-    <div class="wrapper">
-        <div class="card">
-            <div class="info">
-                <p class="title">Название документа</p>
-                <router-link to="/edit/1" class="link">Редактировать документ</router-link>
+    <div>
+        <router-link to="/edit/new" class="link newDoc">Создать новый документ</router-link>
+        <div class="wrapper">
+            <div class="card" v-for="document in documents">
+                <div class="info">
+                    <p class="title">{{document.title}}</p>
+                    <router-link :to="'/edit/' + document._id" class="link">{{document.text}}</router-link>
+                </div>
             </div>
-        </div>
-        <div class="card">
-            <p class="title">Название документа</p>
-            <router-link to="/edit/2" class="link">Редактировать документ</router-link>
-        </div>
-        <div class="card">
-            <p class="title">Название документа</p>
-            <router-link to="/edit/3" class="link">Редактировать документ</router-link>
         </div>
     </div>
 </template>
 
 <script>
+import axios from 'axios';
 export default {
     name: "Index",
     data() {
         return {
+            documents: []
         }
+    },
+    mounted() {
+        axios.get('/index')
+            .then(response => {
+                this.documents = response.data;
+            }).catch(err => {
+                console.error(err);
+            });
     }
 }
 </script>
@@ -44,7 +49,7 @@ export default {
     .info {
         padding: 10px;
     }
-    .title, .link {
+    .title, .card .link {
         color: white;
     }
     .title {
@@ -54,5 +59,8 @@ export default {
     .link {
         text-decoration: none;
         font-style: italic;
+    }
+    .newDoc {
+        margin: 20px;
     }
 </style>

@@ -1,31 +1,47 @@
 <template>
     <div class="container">
-        <p>Название документа</p>
+        <div class="input-wrapper">
+            <p>Название документа</p>
+            <input type="text" v-model="title"/>
+        </div>
         <div class="texts">
-            <textarea id="raw" v-model="input">
+            <textarea id="raw" v-model="text">
             </textarea>
             <code v-html="parsedHtml" id="parsed">
             </code>
         </div>
-        <div class="send-button-wrapper">
-            <button>Save</button>
+        <div class="button-wrapper">
+            <button @click="sendData()">Сохранить</button>
         </div>
     </div>
 </template>
 
 <script>
-import { markdown } from 'markdown';
+import { markdown }  from 'markdown';
+import axios from 'axios';
+
 
 export default {
     name: "Edit",
     data() {
         return {
-            input: `*Привет*`
+            title: '',
+            text: ``
         }
     },
     computed: {
         parsedHtml() {
-            return markdown.toHTML(this.input);
+            return markdown.toHTML(this.text);
+        }
+    },
+    methods: {
+        sendData() {
+            axios.post('/edit', {
+                id: this.$route.params.id,
+                title: this.title,
+                text: this.text
+            });
+            this.$router.push("/");
         }
     }
 }
@@ -52,7 +68,7 @@ export default {
         }
     }
 
-    .send-button-wrapper {
+    .button-wrapper {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -65,6 +81,14 @@ export default {
         }
         & > button:hover{
             cursor: pointer;
+        }
+    }
+
+    .input-wrapper {
+        display: flex;
+        flex-direction: row;
+        & > * {
+            margin: 20px;
         }
     }
 
