@@ -1,23 +1,30 @@
 <template>
     <div class="main">
+        <header>
+            <router-link to="/">To the main page</router-link>
+        </header>
         <router-view></router-view>
     </div>
 </template>
 
 <script>
 export default {
-    name: "App",
-    data() {
-        return {
-        }
-    }
+    name: "App"
 }
 </script>
 
 
 <style lang="scss">
-    .main {
+    header {
         display: flex;
-        color: pink;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 15px;
+
+        & > * {
+            color: green;
+            text-decoration: none;
+            font-size: 18px;
+        }
     }
 </style>

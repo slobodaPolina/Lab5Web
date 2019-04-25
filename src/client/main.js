@@ -7,7 +7,7 @@ import Index from './Index.vue';
 Vue.use(VueRouter);
 
 const routes = [
-  { path: '/edit', component: Edit },
+  { path: '/edit/:id', component: Edit },
   { path: '/', component: Index }
 ];
 
