@@ -2,13 +2,11 @@
     <div class="container">
         <div class="input-wrapper">
             <p>Название документа</p>
-            <input type="text" v-model="title"/>
+            <input type="text" v-model="current.title"/>
         </div>
         <div class="texts">
-            <textarea id="raw" v-model="text">
-            </textarea>
-            <code v-html="parsedHtml" id="parsed">
-            </code>
+            <textarea v-model="current.text"></textarea>
+            <code v-html="parsedHtml"></code>
         </div>
         <div class="button-wrapper">
             <button @click="sendData()">Сохранить</button>
@@ -20,26 +18,27 @@
 import { markdown }  from 'markdown';
 import axios from 'axios';
 
-
 export default {
     name: "Edit",
-    data() {
-        return {
-            title: '',
-            text: ``
-        }
-    },
     computed: {
         parsedHtml() {
-            return markdown.toHTML(this.text);
+            return markdown.toHTML(this.current.text);
+        },
+        current() {
+            return this.$store.getters.getById(this.$route.params.id);
         }
     },
     methods: {
         sendData() {
             axios.post('/edit', {
                 id: this.$route.params.id,
-                title: this.title,
-                text: this.text
+                title: this.current.title,
+                text: this.current.text
+            }).then((result) =>{
+                store.commit(
+                    result === 'updated' ? 'update' : 'insert',
+                    {id: this.$route.params.id, title: this.current.title, text: this.current.text}
+                );
             });
             this.$router.push("/");
         }

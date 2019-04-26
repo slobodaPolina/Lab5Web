@@ -8,8 +8,17 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
-    name: "App"
+    name: "App",
+    created() {
+        axios.get('/index')
+            .then(response => {
+                this.$store.commit('insertAll', response.data);
+            }).catch(err => {
+                console.error(err);
+            });
+    }
 }
 </script>
 

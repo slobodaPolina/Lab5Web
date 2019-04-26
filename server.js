@@ -11,9 +11,10 @@ app.use(bodyParser.json());
 app.post('/edit', (req, res) => {
     var data = req.body;
     if (data.id == "new") {
-        db.insert(data.title, data.text);
+        return db.insert(data.title, data.text);
     } else {
         db.update(data.id, data.title, data.text);
+        return "updated";
     }
 });
 

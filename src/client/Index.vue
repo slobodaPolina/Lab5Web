@@ -5,7 +5,7 @@
             <div class="card" v-for="document in documents">
                 <div class="info">
                     <p class="title">{{document.title}}</p>
-                    <router-link :to="'/edit/' + document._id" class="link">{{document.text}}</router-link>
+                    <router-link :to="'/edit/' + document._id" class="link">Редактировать</router-link>
                 </div>
             </div>
         </div>
@@ -13,21 +13,12 @@
 </template>
 
 <script>
-import axios from 'axios';
 export default {
     name: "Index",
-    data() {
-        return {
-            documents: []
+    computed: {
+        documents () {
+            return this.$store.state.documents
         }
-    },
-    mounted() {
-        axios.get('/index')
-            .then(response => {
-                this.documents = response.data;
-            }).catch(err => {
-                console.error(err);
-            });
     }
 }
 </script>
@@ -62,5 +53,6 @@ export default {
     }
     .newDoc {
         margin: 20px;
+        color: green;
     }
 </style>

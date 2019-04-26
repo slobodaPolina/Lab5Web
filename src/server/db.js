@@ -20,14 +20,17 @@ function insert(title, text) {
     }
     new Doc({ title: title, text: text })
         .save()
-        .then(() => console.log('inserted data'));
+        .then(() => {
+            console.log('inserted data');
+            return this._id;
+        });
 }
 
-function update(id, title, text) {
+async function update(id, title, text) {
     if (!validate(title) || !validate(text)) {
         return;
     }
-    var document = Doc.find({_id: id});
+    const document = await Doc.findById(id);
     document.title = title;
     document.text = text;
     document.save()
