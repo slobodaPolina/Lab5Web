@@ -14,16 +14,13 @@ function validate(value) {
     return value !== "";
 }
 
-function insert(title, text) {
+async function insert(title, text) {
     if (!validate(title) || !validate(text)) {
         return;
     }
-    new Doc({ title: title, text: text })
-        .save()
-        .then(() => {
-            console.log('inserted data');
-            return this._id;
-        });
+    let doc = new Doc({ title: title, text: text });
+    await doc.save();
+    return doc._id;
 }
 
 async function update(id, title, text) {
@@ -33,8 +30,8 @@ async function update(id, title, text) {
     const document = await Doc.findById(id);
     document.title = title;
     document.text = text;
-    document.save()
-        .then(() => console.log('updated data'));
+    await document.save();
+    return document._id;
 }
 
 function selectAll() {

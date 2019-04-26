@@ -25,21 +25,36 @@ export default {
             return markdown.toHTML(this.current.text);
         },
         current() {
-            return this.$store.getters.getById(this.$route.params.id);
+            let id = this.$route.params.id;
+            return this.$store.getters.getById(id);
+        }
+    },
+    created() {
+        if (this.current === undefined) {
+            this.$store.commit('insertEmpty');
         }
     },
     methods: {
         sendData() {
+            let currentId = this.$route.params.id
+            let newTitle = this.current.title;
+            let newText = this.current.text;
             axios.post('/edit', {
-                id: this.$route.params.id,
-                title: this.current.title,
-                text: this.current.text
-            }).then((result) =>{
-                store.commit(
-                    result === 'updated' ? 'update' : 'insert',
-                    {id: this.$route.params.id, title: this.current.title, text: this.current.text}
+                id: currentId,
+                title: newTitle,
+                text: newText
+            }).then((result) => {
+                let generatedID = result.data.id;
+                this.$store.commit(
+                    'update',
+                    {
+                        id: currentId,
+                        newID: generatedID,
+                        title: newTitle,
+                        text: newText
+                    }
                 );
-            });
+            }).catch(err => console.log(err));
             this.$router.push("/");
         }
     }

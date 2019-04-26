@@ -2,7 +2,7 @@
     <div>
         <router-link to="/edit/new" class="link newDoc">Создать новый документ</router-link>
         <div class="wrapper">
-            <div class="card" v-for="document in documents">
+            <div class="card" v-for="document in existingDocuments">
                 <div class="info">
                     <p class="title">{{document.title}}</p>
                     <router-link :to="'/edit/' + document._id" class="link">Редактировать</router-link>
@@ -18,6 +18,9 @@ export default {
     computed: {
         documents () {
             return this.$store.state.documents
+        },
+        existingDocuments() {
+            return this.documents.filter(doc => doc._id != "new");
         }
     }
 }

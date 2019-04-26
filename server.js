@@ -8,13 +8,12 @@ const app = express();
 app.use('/', express.static('dist'));
 app.use(bodyParser.json());
 
-app.post('/edit', (req, res) => {
+app.post('/edit', async function (req, res) {
     var data = req.body;
     if (data.id == "new") {
-        return db.insert(data.title, data.text);
+        res.send({id: await db.insert(data.title, data.text)});
     } else {
-        db.update(data.id, data.title, data.text);
-        return "updated";
+        res.send({id: await db.update(data.id, data.title, data.text)});
     }
 });
 

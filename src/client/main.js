@@ -23,22 +23,25 @@ const store = new Vuex.Store({
     },
     getters: {
         getById: state => id => {
-            let result = state.documents.filter(doc => {
+            return state.documents.filter(doc => {
                 return doc._id === id
             })[0];
-            return result === undefined ?
-                {id: "new", title: "", text: ""} :
-                result;
         }
     },
     mutations: {
-        insert (state, {id, title, text}) {
-            state.documents.push({id, title, text});
+        insertEmpty (state) {
+            let containsEmpty = state.documents.filter(doc => {
+                return doc._id === "new";
+            }).length > 0;
+            if (!containsEmpty) {
+                state.documents.push({_id: "new", title: "", text: ""});
+            }
         },
-        update (state, {id, title, text}) {
+        update (state, {id, newID, title, text}) {
             let result = state.documents.filter(doc => {
-                return doc.id === id
+                return doc._id === id
             });
+            result[0]._id = newID;
             result[0].title = title;
             result[0].text = text;
         },
